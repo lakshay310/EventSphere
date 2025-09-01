@@ -101,7 +101,6 @@ nav ul li a:hover {
     overflow: hidden;
 }
 
-/* Slides with background images */
 .slide {
     position: absolute;
     width: 100%;
@@ -126,7 +125,7 @@ nav ul li a:hover {
     animation-delay: 8s;
 }
 
-/* Fade animation */
+/* picture ghumane ke liye */
 @keyframes fade {
     0% { opacity: 0; }
     8% { opacity: 1; }

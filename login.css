@@ -1,4 +1,4 @@
-/* Reset default browser styles */
+
 * {
     margin: 0;
     padding: 0;
@@ -83,7 +83,7 @@ button:hover {
 .signup-text {
     margin-top: 1rem;
     font-size: 0.9rem;
-    color: white; /* Change normal text color */
+    color: white; /* text color chnage ke liye */
 }
 
 .signup-text a {
@@ -91,7 +91,3 @@ button:hover {
     text-decoration: none;
 }
 
-.signup-text a:hover {
-    text-decoration: underline;
-    color: white; /* Optional: change link color on hover */
-}
