@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Montserrat', sans-serif;
-  background: url(img/home3.png) center/cover fixed no-repeat;
+  background: url(img/home3.png) top/cover fixed no-repeat;
   color: #fff;
   position: relative;
   overflow-x: hidden;
