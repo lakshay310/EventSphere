@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Events</title>
+    
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap"
       rel="stylesheet"
@@ -101,5 +101,29 @@
         </div>
       </div>
     </section>
+<!-- Event Popup -->
+<div id="popup" class="popup">
+  <div class="popup-box">
+    <span class="close-btn">&times;</span>
+
+    <div class="popup-left">
+      <img id="popup-img" src="" alt="Event Image">
+    </div>
+
+    <div class="popup-right">
+      <h2 id="popup-title"></h2>
+      <p id="popup-description"></p>
+      <p><strong>Date:</strong> <span id="popup-date"></span></p>
+      <p><strong>Venue:</strong> <span id="popup-venue"></span></p>
+      <button id="registerBtn">Register Now</button>
+      <p id="registerMsg" style="margin-top:10px; font-weight:500; color:white;"></p> <!-- ✅ Added -->
+    </div>
+  </div>
+</div>
+
+
+<script src="event.js"></script>
+
+
   </body>
 </html>
