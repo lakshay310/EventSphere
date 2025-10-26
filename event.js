@@ -7,8 +7,8 @@ const popupVenue = document.getElementById("popup-venue");
 const closeBtn = document.querySelector(".close-btn");
 const registerBtn = document.getElementById("registerBtn");
 const msg = document.getElementById("registerMsg");
+const loginBtn = document.getElementById("login-btn");
 
-// ✅ Event Details
 const eventDetails = {
   "HACKFORGE": {
     img: "img/person-working-html-computer.jpg",
@@ -36,9 +36,9 @@ const eventDetails = {
   }
 };
 
-// ✅ Show popup on “Join” button click
+// ----------------- POPUP -----------------
 document.querySelectorAll(".btn").forEach(btn => {
-  btn.addEventListener("click", (e) => {
+  btn.addEventListener("click", e => {
     e.preventDefault();
     const title = btn.parentElement.querySelector("h2").textContent;
     const event = eventDetails[title];
@@ -51,22 +51,21 @@ document.querySelectorAll(".btn").forEach(btn => {
     msg.textContent = "";
 
     popup.style.display = "flex";
+    updateLoginUI(); // ensure register button is correct
   });
 });
 
-// ✅ Close popup
 closeBtn.addEventListener("click", () => popup.style.display = "none");
-window.addEventListener("click", (e) => {
-  if (e.target === popup) popup.style.display = "none";
-});
+window.addEventListener("click", e => { if(e.target === popup) popup.style.display = "none"; });
 
-// ✅ Register button logic
-registerBtn.addEventListener("click", async () => {
+// ----------------- REGISTER -----------------
+registerBtn.addEventListener("click", async e => {
+  e.preventDefault();
   const email = localStorage.getItem("loggedInUser");
   const userId = localStorage.getItem("loggedInUserId");
   const eventName = popupTitle.textContent;
 
-  if (!email || !userId) {
+  if(!email || !userId){
     msg.textContent = "⚠️ Please log in first!";
     msg.style.color = "orange";
     return;
@@ -77,18 +76,13 @@ registerBtn.addEventListener("click", async () => {
       .then(res => res.json())
       .then(data => data.find(r => r.userId == userId && r.event === eventName));
 
-    if (existing) {
-      msg.textContent = "⚠️ You are already registered for this event!";
+    if(existing){
+      msg.textContent = "⚠️ Already registered!";
       msg.style.color = "orange";
       return;
     }
 
-    const newReg = {
-      userId: Number(userId),
-      email,
-      event: eventName,
-      time: new Date().toLocaleString()
-    };
+    const newReg = { userId: Number(userId), email, event: eventName, time: new Date().toLocaleString() };
 
     const res = await fetch("http://localhost:3000/registrations", {
       method: "POST",
@@ -96,16 +90,64 @@ registerBtn.addEventListener("click", async () => {
       body: JSON.stringify(newReg)
     });
 
-    if (res.ok) {
+    if(res.ok){
       msg.textContent = "✅ Successfully registered!";
       msg.style.color = "limegreen";
     } else {
       msg.textContent = "❌ Failed to register.";
       msg.style.color = "red";
     }
-  } catch (err) {
+
+  } catch(err){
     console.error(err);
     msg.textContent = "❌ Server error.";
     msg.style.color = "red";
   }
 });
+
+// ----------------- SCROLL -----------------
+document.querySelector(".scroll-btn").addEventListener("click", e => {
+  e.preventDefault();
+  const eventsSection = document.getElementById("events");
+  eventsSection.style.display = "flex";
+  eventsSection.scrollIntoView({ behavior: "smooth" });
+});
+
+// ----------------- LOGIN/LOGOUT -----------------
+function isLoggedIn() {
+  return localStorage.getItem('isLoggedIn') === 'true';
+}
+
+function updateLoginUI() {
+  if(isLoggedIn()){
+    loginBtn.textContent = "Logout";
+    document.querySelectorAll("#registerBtn").forEach(btn => {
+      btn.disabled = false;
+      btn.style.cursor = "pointer";
+      btn.title = "";
+    });
+  } else {
+    loginBtn.textContent = "Login";
+    document.querySelectorAll("#registerBtn").forEach(btn => {
+      btn.disabled = true;
+      btn.style.cursor = "not-allowed";
+      btn.title = "Login to register";
+    });
+  }
+}
+
+loginBtn.addEventListener('click', () => {
+  if(isLoggedIn()){
+    // Logout
+    localStorage.removeItem('loggedInUser');
+    localStorage.removeItem('loggedInUserId');
+    localStorage.setItem('isLoggedIn', "false");
+    updateLoginUI();
+  } else {
+    // Redirect to login page
+    window.location.href = "login.html";
+  }
+});
+
+// ----------------- INITIALIZE -----------------
+updateLoginUI();

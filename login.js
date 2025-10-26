@@ -10,9 +10,10 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
     .then(users => {
       const user = users.find(u => u.email === email && u.password === password);
       if (user) {
-        // ✅ Save the logged-in user's email for later use (e.g. registration)
+        // ✅ Save the logged-in user's email and ID
         localStorage.setItem("loggedInUser", user.email);
         localStorage.setItem("loggedInUserId", user.id);
+        localStorage.setItem("isLoggedIn", "true"); // <-- THIS WAS MISSING
 
         // Redirect to event page
         window.location.href = "event.html";

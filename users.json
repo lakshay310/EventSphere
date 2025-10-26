@@ -13,11 +13,32 @@
   ],
   "registrations": [
     {
-      "id": "88a1",
+      "id": "8902",
+      "userId": 123,
+      "email": "admin@example.com",
+      "event": "INSPIRE TALKS",
+      "time": "10/26/2025, 10:17:57 PM"
+    },
+    {
+      "id": "e167",
+      "userId": 123,
+      "email": "admin@example.com",
+      "event": "JOKE NIGHTS",
+      "time": "10/26/2025, 10:18:32 PM"
+    },
+    {
+      "id": "cfc2",
       "userId": 123,
       "email": "admin@example.com",
       "event": "HACKFORGE",
-      "time": "10/26/2025, 7:32:05 PM"
+      "time": "10/26/2025, 10:20:08 PM"
+    },
+    {
+      "id": "cc00",
+      "userId": 123,
+      "email": "admin@example.com",
+      "event": "NIGHTPULSE",
+      "time": "10/26/2025, 10:39:05 PM"
     }
   ]
 }

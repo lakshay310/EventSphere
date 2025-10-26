@@ -21,19 +21,21 @@ header {
     width: 100%;
     padding: 20px 0;
     z-index: 999;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.1);
 }
+/* Navbar styling */
 
-nav ul {
+/* Centered nav links */
+.nav-links {
     list-style: none;
     display: flex;
-    justify-content: center;
     gap: 40px;
     margin: 0;
     padding: 0;
 }
 
-nav ul li a {
+/* Nav links style */
+.nav-links li a {
     text-decoration: none;
     color: #fff;
     font-weight: 500;
@@ -42,10 +44,40 @@ nav ul li a {
     transition: color 0.3s ease;
 }
 
-nav ul li a:hover,
-nav ul li a.active {
-  color: #ffcc00;
-  border-bottom: 2px solid #ffcc00;
+.nav-links li a:hover,
+.nav-links li a.active {
+    color: #ffcc00;
+    border-bottom: 2px solid #ffcc00;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.login-btn {
+    position: absolute;
+    right: 20px;
+    background: #ffcc00;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 6px 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.login-btn:hover {
+    background: #e6b800;
+}
+
+@media (max-width: 768px) {
+    .login-btn {
+        position: relative;
+        margin-top: 10px;
+    }
 }
 
 /* Hero Section */
@@ -55,8 +87,8 @@ nav ul li a.active {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.4);
-    min-height: 95vh; 
+    background-color: rgba(0, 0, 0, 0.1);
+    height: 92.5vh; 
     width: 100%;
     text-align: center;
 }
@@ -107,7 +139,7 @@ nav ul li a.active {
 /* Events Section */
 .cards-section {
     padding: 60px 40px 120px;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.1);
     text-align: center;
     display: flex;
     justify-content: space-between;
@@ -283,4 +315,7 @@ nav ul li a.active {
   #registerBtn {
     align-self: center;
   }
+}
+#events {
+  display: none; /* hide events section initially */
 }
