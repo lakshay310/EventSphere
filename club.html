@@ -9,25 +9,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Loading Screen -->
-  <div class="loader">
-    <div class="loader-content">
-      <div class="loader-spinner"></div>
-      <div class="loader-text">CLUBS</div>
-    </div>
-  </div>
+<header>
+  <nav>
+  <ul class="nav-links">
+    <li><a href="home.html">HOME</a></li>
+    <li><a href="event.html">EVENTS</a></li>
+    <li><a href="club.html" class="active">CLUBS</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+  </ul>
+ 
+  <button id="login-btn" class="login-btn">Login</button>
+</nav>
 
-  <!-- Navigation -->
-  <header>
-    <nav>
-      <ul>
-        <li><a href="home.html">HOME</a></li>
-        <li><a href="event.html">EVENTS</a></li>
-        <li><a href="#" class="active">CLUBS</a></li>
-        <li><a href="about.html">ABOUT</a></li>
-      </ul>
-    </nav>
-  </header>
+</header>
 
   <!-- Hero Section -->
   <section class="dis">
@@ -42,6 +36,13 @@
   <!-- Clubs Section -->
   <section class="cards-section" id="clubs">
     <h1 class="title">OUR CLUBS</h1>
+     <div class="filter-bar">
+  <button class="filter-btn active" data-category="all">All</button>
+  <button class="filter-btn" data-category="technical">Technical</button>
+  <button class="filter-btn" data-category="cultural">Cultural</button>
+  <button class="filter-btn" data-category="arts">Arts</button>
+  <button class="filter-btn" data-category="sports">Sports</button>
+</div>
     <div class="card-container">
       <!-- Technical Clubs -->
       <section class="card" data-category="technical">
@@ -191,10 +192,11 @@
         </div>
       </section>
     </div>
+   
+
   </section>
 
   <!-- JavaScript Files -->
-  <script src="js/main.js"></script>
-  <script src="js/clubs.js"></script>
+  <script src="club.js"></script>
 </body>
 </html>
