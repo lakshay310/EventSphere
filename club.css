@@ -468,10 +468,9 @@ nav {
 }
 
 /* ===== DEFAULT HIDE ===== */
-.cards-section,
-.filter-bar {
-    display: none;
-}
+/* Note: previously the rules below hid the .cards-section and .filter-bar,
+   preventing the clubs content from showing. That hide has been removed so
+   the sections are visible by default. */
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {

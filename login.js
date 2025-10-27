@@ -5,15 +5,17 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
   const password = document.getElementById("password").value.trim();
   const errorMessage = document.getElementById("error-message");
 
-  fetch("http://localhost:3000/users")
+  // Fetch from users.json directly
+  fetch("users.json")
     .then(response => response.json())
-    .then(users => {
-      const user = users.find(u => u.email === email && u.password === password);
+    .then(data => {
+      const user = data.users.find(u => u.email === email && u.password === password);
       if (user) {
-        // ✅ Save the logged-in user's email and ID
+        // ✅ Save the logged-in user's details
         localStorage.setItem("loggedInUser", user.email);
         localStorage.setItem("loggedInUserId", user.id);
-        localStorage.setItem("isLoggedIn", "true"); // <-- THIS WAS MISSING
+        localStorage.setItem("loggedInUserName", user.name || email.split('@')[0]);
+        localStorage.setItem("isLoggedIn", "true");
 
         // Redirect to event page
         window.location.href = "event.html";
@@ -23,6 +25,6 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
     })
     .catch(err => {
       console.error("Error loading user data:", err);
-      errorMessage.textContent = "Error loading user data.";
+      errorMessage.textContent = "Error loading user data. Make sure users.json is accessible.";
     });
 });
