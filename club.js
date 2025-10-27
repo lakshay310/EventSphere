@@ -156,18 +156,53 @@ const clubEvents = {
 // ----------------- OUR EVENTS -----------------
 async function showUserEvents() {
   try {
-    const response = await fetch("users.json");
-    const data = await response.json();
-    // Return merged registrations (server + local) for other code to consume if needed
-    const merged = mergeRegistrations(data.registrations || []);
+    const userId = Number(localStorage.getItem("loggedInUserId"));
+    if (!userId) return [];
+    
+    // Get merged registrations from clubData.json and localStorage
+    const merged = await mergeRegistrations(userId);
     return merged;
   } catch (err) {
-    console.error("Error fetching users/events:", err);
+    console.error("Error fetching user events:", err);
     return getLocalRegistrations();
   }
 }
 
-// Utility: local registrations stored in localStorage (since we cannot write to users.json)
+// ----------------- DATA MANAGEMENT FUNCTIONS -----------------
+
+// Fetch all data from users.json (single source of truth)
+async function getUsersData() {
+  try {
+    const response = await fetch('users.json');
+    return await response.json();
+  } catch (err) {
+    console.error('Error fetching users data:', err);
+    return null;
+  }
+}
+
+// Get event registrations from users.json
+async function getServerEventRegistrations(userId) {
+  const data = await getUsersData();
+  if (!data) return [];
+  return data.eventRegistrations.filter(reg => reg.userId === userId);
+}
+
+// Get club join requests from users.json
+async function getServerJoinRequests(userId) {
+  const data = await getUsersData();
+  if (!data) return [];
+  return data.clubJoinRequests.filter(req => req.userId === userId);
+}
+
+// Get club events from users.json
+async function getClubEventsData() {
+  const data = await getUsersData();
+  if (!data) return {};
+  return data.clubEvents || {};
+}
+
+// Local storage functions (for new registrations/requests since we can't write to JSON from browser)
 function getLocalRegistrations() {
   try {
     return JSON.parse(localStorage.getItem('localRegistrations') || '[]');
@@ -176,10 +211,18 @@ function getLocalRegistrations() {
   }
 }
 
-function saveLocalRegistration(reg) {
-  const regs = getLocalRegistrations();
-  regs.push(reg);
-  localStorage.setItem('localRegistrations', JSON.stringify(regs));
+async function saveRegistrationToServer(reg) {
+  try {
+    await fetch("http://localhost:3000/eventRegistrations", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(reg)
+    });
+    console.log("✅ Event registration saved to server");
+  } catch (err) {
+    console.error("❌ Error saving registration:", err);
+    alert("Failed to register. Please try again.");
+  }
 }
 
 function getLocalJoinRequests() {
@@ -190,16 +233,33 @@ function getLocalJoinRequests() {
   }
 }
 
-function saveLocalJoinRequest(req) {
-  const reqs = getLocalJoinRequests();
-  reqs.push(req);
-  localStorage.setItem('joinRequests', JSON.stringify(reqs));
+async function saveJoinRequestToServer(req) {
+  try {
+    await fetch("http://localhost:3000/clubJoinRequests", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(req)
+    });
+    console.log("✅ Join request saved to server");
+  } catch (err) {
+    console.error("❌ Error saving join request:", err);
+    alert("Failed to submit join request. Please try again.");
+  }
 }
 
+
 // Merge registrations from users.json and localStorage for display
-function mergeRegistrations(serverRegs) {
-  const local = getLocalRegistrations();
-  return serverRegs.concat(local);
+async function mergeRegistrations(userId) {
+  const serverRegs = await getServerEventRegistrations(userId);
+  const localRegs = getLocalRegistrations();
+  return serverRegs.concat(localRegs);
+}
+
+// Merge join requests from users.json and localStorage
+async function mergeJoinRequests(userId) {
+  const serverReqs = await getServerJoinRequests(userId);
+  const localReqs = getLocalJoinRequests();
+  return serverReqs.concat(localReqs);
 }
 
 // Open a structured modal for a club allowing register / join actions
@@ -245,53 +305,89 @@ function openClubModal(card) {
   modal.querySelector('.close').onclick = () => modal.remove();
   modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
 
-  // Fill the event select with upcoming events for this club from clubEvents data
-  (function populateEvents() {
+  // Fill the event select with upcoming events for this club from users.json
+  (async function populateEvents() {
     const select = modal.querySelector('#eventSelect');
-    select.innerHTML = '';
+    select.innerHTML = '<option value="">Loading events...</option>';
     
-    const events = clubEvents[title] || [];
-    
-    if (events.length === 0) {
-      const opt = document.createElement('option');
-      opt.value = '';
-      opt.textContent = '-- No upcoming events --';
-      select.appendChild(opt);
-    } else {
-      const placeholder = document.createElement('option');
-      placeholder.value = '';
-      placeholder.textContent = '-- Select an event --';
-      select.appendChild(placeholder);
+    try {
+      const clubEventsData = await getClubEventsData();
+      const events = clubEventsData[title] || [];
       
-      events.forEach(ev => {
-        const o = document.createElement('option');
-        o.value = ev.name;
-        o.textContent = `${ev.name} - ${ev.date} (${ev.time})`;
-        select.appendChild(o);
-      });
+      select.innerHTML = '';
+      
+      if (events.length === 0) {
+        const opt = document.createElement('option');
+        opt.value = '';
+        opt.textContent = '-- No upcoming events --';
+        select.appendChild(opt);
+      } else {
+        const placeholder = document.createElement('option');
+        placeholder.value = '';
+        placeholder.textContent = '-- Select an event --';
+        select.appendChild(placeholder);
+        
+        events.forEach(ev => {
+          const o = document.createElement('option');
+          o.value = ev.name;
+          o.textContent = `${ev.name} - ${ev.date} (${ev.time})`;
+          o.dataset.eventId = ev.id || '';
+          select.appendChild(o);
+        });
+      }
+    } catch (err) {
+      console.error('Error loading events:', err);
+      select.innerHTML = '<option value="">Error loading events</option>';
     }
   })();
 
   // Actions
-  modal.querySelector('#registerEventBtn').addEventListener('click', () => {
+  modal.querySelector('#registerEventBtn').addEventListener('click', async () => {
     if (!isLoggedIn()) return alert('Please login to register for events.');
     const userId = Number(localStorage.getItem('loggedInUserId'));
     const email = localStorage.getItem('loggedInUser') || '';
+    const userName = localStorage.getItem('loggedInUserName') || 'User';
     const select = modal.querySelector('#eventSelect');
     const chosen = select.value;
     if (!chosen) return alert('Please select an event to register for.');
 
-    const reg = {
-      id: Date.now().toString(36),
-      userId,
-      email,
-      event: chosen,
-      time: new Date().toLocaleString(),
-      club: title
-    };
-    saveLocalRegistration(reg);
-    alert(`Registered for ${chosen} (club: ${title}).`);
-    modal.remove();
+    // Find the event details from users.json
+    try {
+      const clubEventsData = await getClubEventsData();
+      const events = clubEventsData[title] || [];
+      const eventDetails = events.find(ev => ev.name === chosen);
+      const selectedOption = select.options[select.selectedIndex];
+      const eventId = selectedOption.dataset.eventId || null;
+      
+      // Get club ID from users.json
+      const usersData = await getUsersData();
+      const club = usersData.clubs?.find(c => c.name === title);
+      const clubId = club?.id || null;
+      
+      const now = new Date();
+      const reg = {
+        registrationId: 'reg_' + Date.now().toString(36),
+        userId,
+        userName,
+        userEmail: email,
+        clubId: clubId,
+        clubName: title,
+        eventId: eventId,
+        eventName: chosen,
+        registrationDate: now.toLocaleDateString(),
+        registrationTime: now.toLocaleTimeString(),
+        status: 'confirmed',
+        paymentStatus: 'pending',
+        teamSize: 1,
+        specialRequirements: 'None'
+      };
+      await saveRegistrationToServer(reg);
+      alert(`✅ Successfully registered for ${chosen}!\n\nClub: ${title}\nDate: ${eventDetails?.date || 'TBD'}\nTime: ${eventDetails?.time || 'TBD'}\nVenue: ${eventDetails?.venue || 'TBD'}\n\nRegistration ID: ${reg.registrationId}\n\nYou will receive a confirmation email shortly.`);
+      modal.remove();
+    } catch (err) {
+      console.error('Error during registration:', err);
+      alert('Registration failed. Please try again.');
+    }
   });
 
   modal.querySelector('#requestJoinBtn').addEventListener('click', () => {
@@ -361,7 +457,7 @@ function openClubModal(card) {
     modalBody.innerHTML = joinFormHTML;
     
     // Handle form submission
-    modal.querySelector('#submitJoinBtn').addEventListener('click', () => {
+    modal.querySelector('#submitJoinBtn').addEventListener('click', async () => {
       const name = modal.querySelector('#joinName').value.trim();
       const phone = modal.querySelector('#joinPhone').value.trim();
       const year = modal.querySelector('#joinYear').value;
@@ -374,24 +470,40 @@ function openClubModal(card) {
         return alert('Please fill in all required fields marked with *');
       }
       
-      const req = {
-        id: Date.now().toString(36),
-        userId,
-        email,
-        name,
-        phone,
-        year,
-        department,
-        reason,
-        experience,
-        club: title,
-        time: new Date().toLocaleString(),
-        status: 'pending'
-      };
-      
-      saveLocalJoinRequest(req);
-      alert(`Join request submitted successfully for ${title}!\n\nWe'll review your application and get back to you soon.`);
-      modal.remove();
+      try {
+        // Get club ID from users.json
+        const usersData = await getUsersData();
+        const club = usersData.clubs?.find(c => c.name === title);
+        const clubId = club?.id || null;
+        
+        const now = new Date();
+        const req = {
+          requestId: 'req_' + Date.now().toString(36),
+          userId,
+          userName: name,
+          userEmail: email,
+          clubId: clubId,
+          clubName: title,
+          phoneNumber: phone,
+          yearOfStudy: year,
+          department: department,
+          reasonToJoin: reason,
+          relevantExperience: experience || 'None',
+          requestDate: now.toLocaleDateString(),
+          requestTime: now.toLocaleTimeString(),
+          status: 'pending',
+          reviewedBy: null,
+          reviewDate: null,
+          reviewComments: null
+        };
+        
+        await saveJoinRequestToServer(req);
+        alert(`✅ Join request submitted successfully for ${title}!\n\nYour application is under review. We'll get back to you within 2-3 business days.\n\nRequest ID: ${req.requestId}\n\nClub Coordinator: ${club?.coordinator?.name || 'N/A'}\nEmail: ${club?.coordinator?.email || 'N/A'}`);
+        modal.remove();
+      } catch (err) {
+        console.error('Error submitting join request:', err);
+        alert('Failed to submit request. Please try again.');
+      }
     });
     
     // Handle cancel
