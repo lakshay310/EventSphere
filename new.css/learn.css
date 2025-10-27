@@ -1,0 +1,13 @@
+body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #a3bed4; 
+    }
+    .learn-more{
+      background-color: #1ec32c; 
+      color: white;
+      text-align: center;
+      padding: 24px;
+      font-size: 24px;
+      font-weight: bold;
+    }
