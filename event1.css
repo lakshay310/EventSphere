@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  background-image: url(img/home3.png);
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: white;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+.list {
+  height: 900px;
+  margin-left: 20 0px;
+  background-color: rgb(255, 255, 255, 0.1);
+}
+header {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+nav ul {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  list-style-type: none;
+}
+nav a {
+  color: #ffcc00;
+  text-decoration: none;
+}
+nav ul li a:hover {
+  color: #ffcc00;
+  border-bottom: 2px solid #ffcc00;
+}

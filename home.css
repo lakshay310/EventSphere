@@ -67,6 +67,30 @@ nav ul li a.active {
   color: #ffcc00;
   border-bottom: 2px solid #ffcc00;
 }
+
+.scroll-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    padding: 14px 28px;
+    background: #ffcc00;
+    color: black;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+    animation: bounce 1.5s infinite;
+    cursor: pointer;
+}
+
+.scroll-btn:hover {
+    background: #e6b800;
+    transform: translateY(4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
 /* Intro layout */
 .intro {
     height: 100vh;
@@ -275,4 +299,32 @@ nav ul li a.active {
 
 .card-content .btn:hover {
     background: #e6b800;
+}
+.popup {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.7);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+}
+
+.popup-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  text-align:center;
+  color:black;
+  max-width:400px;
+}
+.popup-content button {
+  margin: 10px;
+  padding: 10px 20px;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
 }
