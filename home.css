@@ -63,11 +63,16 @@ nav ul li a {
 }
 
 nav ul li a:hover,
+<<<<<<< HEAD
 nav ul li a.active{
     color: #ffcc00;
     border-bottom: 2px solid #ffcc00;
+=======
+nav ul li a.active {
+  color: #ffcc00;
+  border-bottom: 2px solid #ffcc00;
+>>>>>>> e6aca5b1f1c9ec2e7ca5ae5a3baad4085fa5e08c
 }
-
 /* Intro layout */
 .intro {
     height: 100vh;
@@ -103,7 +108,6 @@ nav ul li a.active{
     overflow: hidden;
 }
 
-/* Slides with background images */
 .slide {
     position: absolute;
     width: 100%;
@@ -128,7 +132,7 @@ nav ul li a.active{
     animation-delay: 8s;
 }
 
-/* Fade animation */
+/* picture ghumane ke liye */
 @keyframes fade {
     0% { opacity: 0; }
     8% { opacity: 1; }
@@ -277,4 +281,32 @@ nav ul li a.active{
 
 .card-content .btn:hover {
     background: #e6b800;
+}
+.popup {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.7);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+}
+
+.popup-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  text-align:center;
+  color:black;
+  max-width:400px;
+}
+.popup-content button {
+  margin: 10px;
+  padding: 10px 20px;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
 }

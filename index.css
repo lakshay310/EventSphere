@@ -1,4 +1,4 @@
-/* General styles */
+
 body {
     margin: 0;
     padding: 0;
@@ -6,11 +6,12 @@ body {
     overflow:hidden;
 }
 
-/* Navigation Bar */
+
 header {
     position: absolute;
     top: 0;
     width: 100%;
+    
     padding: 20px 0;
     z-index: 10;
 }
@@ -18,6 +19,7 @@ header {
 nav ul {
     list-style: none;
     display: flex;
+    
     justify-content: center;
     gap: 40px;
     margin: 0;
@@ -37,7 +39,7 @@ nav ul li a:hover {
     color: #ffcc00;
 }
 
-/* Hero Section */
+
 .hero {
     height: 100vh;
     background: url("img/get.png") no-repeat center center/cover;
@@ -53,7 +55,7 @@ nav ul li a:hover {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.3); /* dark overlay for better text visibility */
+    background-color: rgba(0,0,0,0.3); /*  background color dark text dikhane ke liye*/
 }
 
 .hero-content {
@@ -69,7 +71,6 @@ nav ul li a:hover {
     line-height: 1.1;
 }
 
-/* Button */
 .btn {
     display: inline-block;
     padding: 12px 28px;
