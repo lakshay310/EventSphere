@@ -63,15 +63,33 @@ nav ul li a {
 }
 
 nav ul li a:hover,
-<<<<<<< HEAD
-nav ul li a.active{
-    color: #ffcc00;
-    border-bottom: 2px solid #ffcc00;
-=======
 nav ul li a.active {
   color: #ffcc00;
   border-bottom: 2px solid #ffcc00;
->>>>>>> e6aca5b1f1c9ec2e7ca5ae5a3baad4085fa5e08c
+}
+
+.scroll-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    padding: 14px 28px;
+    background: #ffcc00;
+    color: black;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+    animation: bounce 1.5s infinite;
+    cursor: pointer;
+}
+
+.scroll-btn:hover {
+    background: #e6b800;
+    transform: translateY(4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 /* Intro layout */
 .intro {

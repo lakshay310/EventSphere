@@ -44,12 +44,6 @@ header {
     transition: color 0.3s ease;
 }
 
-<<<<<<< HEAD
-nav ul li a:hover,
-nav ul li a.active{
-    color: #ffcc00;
-    border-bottom: 2px solid #ffcc00;
-=======
 .nav-links li a:hover,
 .nav-links li a.active {
     color: #ffcc00;
@@ -84,7 +78,6 @@ nav {
         position: relative;
         margin-top: 10px;
     }
->>>>>>> e6aca5b1f1c9ec2e7ca5ae5a3baad4085fa5e08c
 }
 
 /* Hero Section */
