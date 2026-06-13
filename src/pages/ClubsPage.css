@@ -1,0 +1,154 @@
+/* ---- Clubs Page ---- */
+.clubs-page {
+  background:
+    linear-gradient(to bottom, rgba(7,7,26,0.3), rgba(7,7,26,1) 50%),
+    url('/img/home3.png') top/cover fixed no-repeat;
+  min-height: 100vh;
+}
+
+/* ---- Hero ---- */
+.clubs-hero {
+  min-height: 70vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 60px 24px;
+  background: rgba(7, 7, 26, 0.55);
+  position: relative; overflow: hidden;
+}
+.clubs-hero-orb {
+  position: absolute;
+  width: 550px; height: 550px;
+  background: radial-gradient(circle, rgba(255,204,0,0.18), transparent 70%);
+  border-radius: 50%;
+  bottom: -150px; left: -80px;
+  pointer-events: none;
+  animation: float 12s ease-in-out infinite;
+}
+.clubs-hero-content { position: relative; z-index: 5; max-width: 700px; }
+.clubs-badge {
+  display: inline-block; padding: 6px 18px;
+  background: rgba(255,204,0,0.1); border: 1px solid rgba(255,204,0,0.3);
+  border-radius: 50px; font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 3px; color: var(--accent); margin-bottom: 20px;
+}
+.clubs-hero-title {
+  font-size: clamp(2.5rem, 7vw, 5.5rem); font-weight: 900;
+  line-height: 1.05; margin-bottom: 18px; letter-spacing: -1px;
+}
+.clubs-hero-sub { font-size: 1rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 28px; }
+
+/* ---- Grid Section ---- */
+.clubs-grid-section {
+  padding: 70px 40px;
+  background: rgba(0,0,0,0.45);
+}
+
+.clubs-filter-bar {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  justify-content: center; margin-bottom: 40px;
+}
+
+.clubs-grid {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+/* ---- Club Card ---- */
+.club-card {
+  background: var(--bg-card);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: var(--transition);
+}
+.club-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--border-accent);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 30px var(--accent-glow);
+}
+
+.club-card-img-wrap { position: relative; height: 180px; overflow: hidden; }
+.club-card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.club-card:hover .club-card-img { transform: scale(1.06); }
+.club-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(7,7,26,0.85), transparent 60%);
+}
+.club-cat-badge {
+  position: absolute; bottom: 12px; left: 12px;
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,204,0,0.3);
+  border-radius: 20px; padding: 3px 10px;
+  font-size: 0.68rem; font-weight: 700; color: var(--accent);
+  text-transform: capitalize; letter-spacing: 0.3px;
+}
+
+.club-card-body { padding: 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.club-card-name { font-size: 1.05rem; font-weight: 800; color: var(--text-primary); }
+.club-card-desc { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.6; flex: 1; }
+
+.club-btn-row { display: flex; gap: 8px; }
+.club-btn { font-size: 0.76rem; padding: 7px 14px; }
+.club-join-btn { font-size: 0.82rem; padding: 9px 16px; width: 100%; justify-content: center; }
+
+/* ---- Modal overrides for clubs ---- */
+.club-modal-img {
+  width: 100%; height: 200px; object-fit: cover;
+  border-radius: var(--radius-sm); margin-bottom: 16px;
+}
+.club-modal-desc {
+  font-size: 0.92rem; color: var(--text-secondary);
+  line-height: 1.65; margin-bottom: 20px;
+}
+.club-modal-offers h4 {
+  font-size: 0.95rem; font-weight: 700; color: var(--accent);
+  margin-bottom: 12px;
+}
+.club-modal-offers ul {
+  display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;
+}
+.club-modal-offers ul li { font-size: 0.85rem; color: var(--text-secondary); }
+
+/* ---- Club Events List ---- */
+.club-events-list { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
+.club-event-item {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: space-between;
+  transition: var(--transition);
+}
+.club-event-item:hover { border-color: var(--border-accent); }
+.club-event-info { flex: 1; }
+.club-event-name { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+.club-event-meta { font-size: 0.78rem; color: var(--text-secondary); }
+.club-event-reg-btn { font-size: 0.8rem; padding: 8px 18px; white-space: nowrap; }
+.club-event-reg-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* ---- Join Form ---- */
+.join-modal-form { display: flex; flex-direction: column; }
+
+/* ---- popup-msg reuse ---- */
+.popup-msg {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.popup-msg.success { background: rgba(80,200,80,0.1); border: 1px solid rgba(80,200,80,0.3); color: #7eff7e; }
+.popup-msg.warn    { background: rgba(255,180,0,0.1);  border: 1px solid rgba(255,180,0,0.3);  color: #ffd966; }
+.popup-msg.error   { background: rgba(255,80,80,0.1);  border: 1px solid rgba(255,80,80,0.3);  color: #ff9090; }
+
+@media (max-width: 600px) {
+  .clubs-grid-section { padding: 40px 20px; }
+  .club-btn-row { flex-direction: column; }
+}

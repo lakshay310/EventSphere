@@ -10,13 +10,13 @@ export default defineConfig({
     outDir: 'dist',
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index-react.html')
+        main: resolve(__dirname, 'index.html')
       }
     }
   },
   server: {
     port: 3001,
-    open: '/index-react.html',
+    open: true,
     proxy: {
       '/api': {
         target: 'http://localhost:3000',

@@ -4,11 +4,11 @@
   "description": "Event Sphere - Event Management Platform",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"json-server --watch users.json --port 3000\" \"vite --config vite.config.js\"",
+    "dev": "concurrently \"json-server users.json --port 3000\" \"vite\"",
     "build": "vite build",
     "preview": "vite preview",
-    "server": "json-server --watch users.json --port 3000",
-    "client": "vite --config vite.config.js"
+    "server": "json-server users.json --port 3000",
+    "client": "vite"
   },
   "keywords": [],
   "author": "",
