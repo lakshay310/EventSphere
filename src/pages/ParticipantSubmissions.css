@@ -1,0 +1,363 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.participant-submissions-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #0D1117;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.submissions-content {
+  flex: 1;
+  margin-left: 250px;
+  padding: 40px;
+  color: #C9D1D9;
+}
+
+.submissions-header {
+  margin-bottom: 40px;
+}
+
+.submissions-header h1 {
+  color: #FFFFFF;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #C9D1D9;
+  font-size: 1.1rem;
+}
+
+.available-events-section,
+.submissions-list-section {
+  margin-bottom: 50px;
+}
+
+.available-events-section h2,
+.submissions-list-section h2 {
+  color: #FFFFFF;
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.available-events-section h2 i,
+.submissions-list-section h2 i {
+  color: #58A6FF;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.event-card {
+  background-color: #161B22;
+  border-radius: 15px;
+  padding: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(88, 166, 255, 0.2);
+  border-color: #58A6FF;
+}
+
+.event-card h3 {
+  color: #FFFFFF;
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+}
+
+.event-card p {
+  color: #C9D1D9;
+  margin-bottom: 20px;
+}
+
+.submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #58A6FF 0%, #4C8ED8 100%);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(88, 166, 255, 0.4);
+}
+
+.submit-btn i {
+  margin-right: 8px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px;
+  background-color: #161B22;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.empty-state i {
+  font-size: 4rem;
+  color: #58A6FF;
+  margin-bottom: 20px;
+}
+
+.empty-state p {
+  color: #C9D1D9;
+  font-size: 1.1rem;
+}
+
+.submissions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.submission-card {
+  background-color: #161B22;
+  border-radius: 15px;
+  padding: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s;
+}
+
+.submission-card:hover {
+  border-color: #58A6FF;
+  box-shadow: 0 5px 20px rgba(88, 166, 255, 0.15);
+}
+
+.submission-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.submission-header h3 {
+  color: #FFFFFF;
+  font-size: 1.5rem;
+}
+
+.status-badge {
+  padding: 6px 15px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-pending {
+  background-color: rgba(248, 140, 82, 0.2);
+  color: #F88C52;
+}
+
+.status-review {
+  background-color: rgba(88, 166, 255, 0.2);
+  color: #58A6FF;
+}
+
+.status-approved {
+  background-color: rgba(63, 185, 80, 0.2);
+  color: #3FB950;
+}
+
+.status-rejected {
+  background-color: rgba(233, 78, 92, 0.2);
+  color: #E94E5C;
+}
+
+.submission-event,
+.submission-team,
+.submission-date {
+  color: #C9D1D9;
+  margin-bottom: 10px;
+}
+
+.submission-links {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.submission-links a {
+  color: #58A6FF;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.3s;
+}
+
+.submission-links a:hover {
+  color: #4a8dd8;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background-color: #161B22;
+  border-radius: 15px;
+  padding: 30px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: slideUp 0.3s;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: #C9D1D9;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.modal-close:hover {
+  color: #E94E5C;
+}
+
+.modal-content h2 {
+  color: #FFFFFF;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+}
+
+.submission-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  color: #C9D1D9;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea {
+  background-color: #0D1117;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 12px;
+  color: #FFFFFF;
+  font-family: 'Montserrat', sans-serif;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #58A6FF;
+}
+
+.submit-form-btn {
+  background: linear-gradient(135deg, #3FB950 0%, #2ea043 100%);
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 10px;
+}
+
+.submit-form-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(63, 185, 80, 0.4);
+}
+
+.submit-form-btn i {
+  margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+  .submissions-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .submissions-header h1 {
+    font-size: 2rem;
+  }
+
+  .events-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .submission-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .submission-links {
+    flex-direction: column;
+  }
+}
