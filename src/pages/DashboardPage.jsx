@@ -23,14 +23,14 @@ const CHART_COLORS = [
 const CHART_BORDERS = CHART_COLORS.map(c => c.replace('0.85)', '1)'))
 
 const ALL_EVENTS_COUNT = 7
-const ALL_CLUBS_COUNT  = 12
+const ALL_CLUBS_COUNT = 12
 
 const DashboardPage = () => {
   const { user } = useAuth()
-  const [myRegs, setMyRegs]   = useState([])
+  const [myRegs, setMyRegs] = useState([])
   const [allRegs, setAllRegs] = useState([])
   const [loading, setLoading] = useState(true)
-  const [error, setError]     = useState(null)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +40,7 @@ const DashboardPage = () => {
           fetch(`http://localhost:3000/registrations?userId=${user?.id}`),
           fetch(`http://localhost:3000/registrations`),
         ])
-        const myData  = await myRes.json()
+        const myData = await myRes.json()
         const allData = await allRes.json()
         setMyRegs(Array.isArray(myData) ? myData : [])
         setAllRegs(Array.isArray(allData) ? allData : [])
@@ -54,16 +54,16 @@ const DashboardPage = () => {
   }, [user])
 
   // ---- Chart data: My registrations by event name ----
-  const myEventNames   = [...new Set(myRegs.map(r => r.eventName))]
-  const myEventCounts  = myEventNames.map(name => myRegs.filter(r => r.eventName === name).length)
+  const myEventNames = [...new Set(myRegs.map(r => r.eventName))]
+  const myEventCounts = myEventNames.map(name => myRegs.filter(r => r.eventName === name).length)
 
   const barData = {
     labels: myEventNames.length > 0 ? myEventNames : ['No registrations yet'],
     datasets: [{
       label: 'My Registrations',
-      data:  myEventCounts.length > 0 ? myEventCounts : [0],
+      data: myEventCounts.length > 0 ? myEventCounts : [0],
       backgroundColor: CHART_COLORS,
-      borderColor:     CHART_BORDERS,
+      borderColor: CHART_BORDERS,
       borderWidth: 2,
       borderRadius: 6,
     }],
@@ -81,20 +81,20 @@ const DashboardPage = () => {
   const pieData = {
     labels: catLabels.length > 0 ? catLabels : ['No data yet'],
     datasets: [{
-      data:            catValues.length > 0 ? catValues : [1],
+      data: catValues.length > 0 ? catValues : [1],
       backgroundColor: CHART_COLORS,
-      borderColor:     CHART_BORDERS,
+      borderColor: CHART_BORDERS,
       borderWidth: 2,
     }],
   }
 
   // ---- Chart data: Club categories (doughnut — hardcoded proportions) ----
   const doughnutData = {
-    labels:   ['Technical', 'Cultural', 'Arts', 'Sports'],
+    labels: ['Technical', 'Cultural', 'Arts', 'Sports'],
     datasets: [{
-      data:            [3, 3, 3, 3],
+      data: [3, 3, 3, 3],
       backgroundColor: CHART_COLORS,
-      borderColor:     CHART_BORDERS,
+      borderColor: CHART_BORDERS,
       borderWidth: 2,
     }],
   }
@@ -104,7 +104,7 @@ const DashboardPage = () => {
     maintainAspectRatio: false,
     plugins: {
       legend: { labels: { color: '#b0b0cc', font: { family: 'Montserrat', size: 12 } } },
-      title:  { display: true, text: title, color: '#ffcc00', font: { family: 'Montserrat', size: 14, weight: '700' } },
+      title: { display: true, text: title, color: '#ffcc00', font: { family: 'Montserrat', size: 14, weight: '700' } },
       tooltip: { bodyFont: { family: 'Montserrat' }, titleFont: { family: 'Montserrat' } },
     },
     scales: title.includes('Registration') ? {
@@ -114,10 +114,10 @@ const DashboardPage = () => {
   })
 
   const stats = [
-    { icon: '🎟️', label: 'My Registrations',   val: myRegs.length,          sub: `out of ${ALL_EVENTS_COUNT} events` },
-    { icon: '🏛️', label: 'Total Events',        val: ALL_EVENTS_COUNT,       sub: 'on campus' },
-    { icon: '🎭', label: 'Total Clubs',          val: ALL_CLUBS_COUNT,        sub: 'to explore' },
-    { icon: '📊', label: 'Campus Registrations', val: allRegs.length,         sub: 'by all users' },
+    { icon: '🎟️', label: 'My Registrations', val: myRegs.length, sub: `out of ${ALL_EVENTS_COUNT} events` },
+    { icon: '🏛️', label: 'Total Events', val: ALL_EVENTS_COUNT, sub: 'on campus' },
+    { icon: '🎭', label: 'Total Clubs', val: ALL_CLUBS_COUNT, sub: 'to explore' },
+    { icon: '📊', label: 'Campus Registrations', val: allRegs.length, sub: 'by all users' },
   ]
 
   return (
@@ -140,7 +140,7 @@ const DashboardPage = () => {
         {/* Stats row */}
         <div className="dash-stats fade-in-up">
           {stats.map((s, i) => (
-            <div key={i} className="dash-stat-card" style={{ animationDelay:`${i * 0.08}s` }}>
+            <div key={i} className="dash-stat-card" style={{ animationDelay: `${i * 0.08}s` }}>
               <div className="dash-stat-icon">{s.icon}</div>
               <div className="dash-stat-val">{loading ? '—' : s.val}</div>
               <div className="dash-stat-label">{s.label}</div>
@@ -160,7 +160,7 @@ const DashboardPage = () => {
             </div>
           </div>
 
-          <div className="dash-chart-card fade-in-up" style={{ animationDelay:'0.1s' }}>
+          <div className="dash-chart-card fade-in-up" style={{ animationDelay: '0.1s' }}>
             <div className="chart-wrap">
               {loading
                 ? <div className="chart-loading">Loading chart…</div>
@@ -169,7 +169,7 @@ const DashboardPage = () => {
             </div>
           </div>
 
-          <div className="dash-chart-card fade-in-up" style={{ animationDelay:'0.2s' }}>
+          <div className="dash-chart-card fade-in-up" style={{ animationDelay: '0.2s' }}>
             <div className="chart-wrap">
               <Doughnut data={doughnutData} options={chartOptions('Clubs by Category')} />
             </div>
@@ -185,7 +185,7 @@ const DashboardPage = () => {
             <div className="dash-empty">
               <div className="dash-empty-icon">🎟️</div>
               <p>You haven't registered for any events yet.</p>
-              <a href="/events" className="btn-primary" style={{ textDecoration:'none', marginTop:'12px', display:'inline-flex', padding:'10px 24px', borderRadius:'50px', background:'var(--accent)', color:'#000', fontWeight:'700', fontSize:'0.88rem' }}>
+              <a href="/events" className="btn-primary" style={{ textDecoration: 'none', marginTop: '12px', display: 'inline-flex', padding: '10px 24px', borderRadius: '50px', background: 'var(--accent)', color: '#000', fontWeight: '700', fontSize: '0.88rem' }}>
                 Browse Events
               </a>
             </div>
