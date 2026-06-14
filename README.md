@@ -146,17 +146,3 @@ The dashboard displays real-time data fetched from `json-server`:
 5. Open a Pull Request
 
 ---
-
-## 📄 License
-
-This project is licensed under the **ISC License**.
-
----
-
-<div align="center">
-  <p>Built with ❤️ for campus communities</p>
-<<<<<<< HEAD
-</div>
-=======
-</div>
->>>>>>> f2b406d4072e4e57d81efbea101d75c5660bb298
